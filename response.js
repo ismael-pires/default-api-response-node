@@ -5,7 +5,7 @@
  * content {Array, Object}      Conteúdo da resposta
  */
 
-export default (req, res, next) => {
+ module.exports =  (req, res, next) => {
 
     /**
      * Método de de resposta padrão para Exact Code
