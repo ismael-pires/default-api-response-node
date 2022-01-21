@@ -21,7 +21,9 @@ export default (req, res, next) => {
         result.status = status;
         result.message = message;
 
-        if (!!content) {
+        if (status === 500) {
+            console.log(content)
+        } else if (!!content) {
             result.content = content;
         }
 
