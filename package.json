@@ -2,7 +2,7 @@
     "name": "default-api-response-node",
     "description": "Response template for requests",
     "author": "Ismael Pires",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "module",
     "main": "app.js"
   }
