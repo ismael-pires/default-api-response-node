@@ -14,7 +14,7 @@ export default (req, res, next) => {
      * @param {Array, Object}   content       Conteúdo da resposta
      * @returns 
      */
-    res.response = (status, message, content, version = true, endpoint = true) => {
+    res.send = (status, message, content, version = true, endpoint = true) => {
 
         let result = {};
 
@@ -39,43 +39,43 @@ export default (req, res, next) => {
     }
 
     res.success = function (message = 'Sucesso!', content) {
-        return this.response(200, message, content)
+        return this.send(200, message, content)
     }
 
     res.created = function (message = 'Algo foi criado com sucesso!', content) {
-        return this.response(201, message, content)
+        return this.send(201, message, content)
     }
 
     res.accepted = function (message = 'Requisição aceita!', content) {
-        return this.response(201, message, content)
+        return this.send(201, message, content)
     }
 
     res.noContent = function (message = 'Sem conteúdo!', content) {
-        return this.response(201, message, content)
+        return this.send(201, message, content)
     }
 
     res.badRequest = function (message = 'Requisição inválida!', content) {
-        return this.response(400, message, content)
+        return this.send(400, message, content)
     }
 
     res.unauthorized = function (message = 'Credencias inválidas!', content) {
-        return this.response(401, message, content)
+        return this.send(401, message, content)
     }
 
     res.forbidden = function (message = 'Sem autorização!', content) {
-        return this.response(403, message, content)
+        return this.send(403, message, content)
     }
 
     res.notFound = function (message = 'Recurso não encontrado!', content) {
-        return this.response(404, message, content)
+        return this.send(404, message, content)
     }
 
     res.methodNotAllowed = function (message = 'Métodos não permitido!', content) {
-        return this.response(405, message, content)
+        return this.send(405, message, content)
     }
 
     res.error = function (message = 'Erro interno!', content) {
-        return this.response(500, message, content)
+        return this.send(500, message, content)
     }
 
     next()
