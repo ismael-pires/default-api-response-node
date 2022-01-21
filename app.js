@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config()
+
 /**
  * Método para simplificar o modelo de resposta
  * status  {Integer}            Códido de status da resposta
