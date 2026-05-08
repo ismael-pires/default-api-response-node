@@ -33,13 +33,14 @@ interface ApiResponse {
   status: number
   message: string | string[]
   content?: any
-  timestamp: number
-  contentSize: number
+  contentLength?: number
+  timestamp?: number
   version?: string
   endpoint?: string
 }
 
 interface ResponseMiddlewareOptions {
+  includeTimestamp?: boolean
   includeVersion?: boolean
   includeEndpoint?: boolean
 }
@@ -49,6 +50,7 @@ export type { ApiResponse, CustomResponse, ResponseMiddlewareOptions }
 const defaultOptions: Required<ResponseMiddlewareOptions> = {
   includeVersion: true,
   includeEndpoint: true,
+  includeTimestamp: true,
 }
 
 /**
@@ -93,12 +95,15 @@ const attachResponseMethods = (
       result.content = content
     }
 
-    result.timestamp = new Date().getTime()
+    result.contentLength = !!content ? (Array.isArray(content) ? content.length : 1) : 0
 
-    result.contentSize = !!content ? JSON.stringify(content).length : 0
+    const shouldIncludeTimestamp = settings.includeTimestamp
+    const shouldIncludeVersion = version || settings.includeVersion
+    const shouldIncludeEndpoint = endpoint || settings.includeEndpoint
 
-    const shouldIncludeVersion = version ?? settings.includeVersion
-    const shouldIncludeEndpoint = endpoint ?? settings.includeEndpoint
+    if (shouldIncludeTimestamp) {
+      result.timestamp = new Date().getTime()
+    }
 
     if (shouldIncludeVersion) {
       result.version = process.env.npm_package_version
