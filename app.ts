@@ -33,7 +33,6 @@ interface ApiResponse {
   status: number
   message: string | string[]
   content?: any
-  contentLength?: number
   timestamp?: number
   version?: string
   endpoint?: string
@@ -73,33 +72,23 @@ const attachResponseMethods = (
    * @param {number}          status          Response status code
    * @param {string|string[]} message         Response message
    * @param {any}             content         Response content
-   * @param {boolean}         version         Include version in response
-   * @param {boolean}         endpoint        Include endpoint in response
    * @returns {Response}
    */
-  res.default = function (
-    status: number,
-    message: string | string[],
-    content?: any,
-    version?: boolean,
-    endpoint?: boolean,
-  ): Response {
+  res.default = function (status: number, message: string | string[], content?: any): Response {
     const result: ApiResponse = {} as ApiResponse
 
     result.status = status
     result.message = message
 
     if (status === 500) {
-      console.log(content)
+      console.error(content)
     } else if (!!content) {
       result.content = content
     }
 
-    result.contentLength = !!content ? (Array.isArray(content) ? content.length : 1) : 0
-
     const shouldIncludeTimestamp = settings.includeTimestamp
-    const shouldIncludeVersion = version || settings.includeVersion
-    const shouldIncludeEndpoint = endpoint || settings.includeEndpoint
+    const shouldIncludeVersion = settings.includeVersion
+    const shouldIncludeEndpoint = settings.includeEndpoint
 
     if (shouldIncludeTimestamp) {
       result.timestamp = new Date().getTime()
